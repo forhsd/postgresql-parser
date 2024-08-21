@@ -13,13 +13,13 @@ package tree_test
 import (
 	"testing"
 
-	//"github.com/auxten/postgresql-parser/pkg/settings/cluster"
-	"github.com/auxten/postgresql-parser/pkg/sql/parser"
-	//_ "github.com/auxten/postgresql-parser/pkg/sql/sem/builtins"
-	"github.com/auxten/postgresql-parser/pkg/sql/sem/tree"
-	"github.com/auxten/postgresql-parser/pkg/sql/sessiondata"
-	"github.com/auxten/postgresql-parser/pkg/sql/types"
-	"github.com/auxten/postgresql-parser/pkg/util/leaktest"
+	//"github.com/forhsd/postgresql-parser/pkg/settings/cluster"
+	"github.com/forhsd/postgresql-parser/pkg/sql/parser"
+	//_ "github.com/forhsd/postgresql-parser/pkg/sql/sem/builtins"
+	"github.com/forhsd/postgresql-parser/pkg/sql/sem/tree"
+	"github.com/forhsd/postgresql-parser/pkg/sql/sessiondata"
+	"github.com/forhsd/postgresql-parser/pkg/sql/types"
+	"github.com/forhsd/postgresql-parser/pkg/util/leaktest"
 )
 
 func TestContainsVars(t *testing.T) {
@@ -70,7 +70,7 @@ func TestNormalizeExpr(t *testing.T) {
 		// These expression previously always mapped INT2/INT4 to INT8, but after
 		// unifying the type system, they now produce better results. Leaving the
 		// tests here to make sure they don't regress. See
-		// https://github.com/auxten/postgresql-parser/issues/32639
+		// https://github.com/forhsd/postgresql-parser/issues/32639
 		{`CAST(NULL AS INT2)`, `CAST(NULL AS INT2)`},
 		{`CAST(NULL AS INT4)`, `CAST(NULL AS INT4)`},
 		{`CAST(NULL AS INT8)`, `CAST(NULL AS INT8)`},

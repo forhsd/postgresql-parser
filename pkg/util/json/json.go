@@ -25,10 +25,10 @@ import (
 	"github.com/cockroachdb/apd"
 	"github.com/cockroachdb/errors"
 
-	"github.com/auxten/postgresql-parser/pkg/sql/pgwire/pgcode"
-	"github.com/auxten/postgresql-parser/pkg/sql/pgwire/pgerror"
-	"github.com/auxten/postgresql-parser/pkg/util/encoding"
-	"github.com/auxten/postgresql-parser/pkg/util/unique"
+	"github.com/forhsd/postgresql-parser/pkg/sql/pgwire/pgcode"
+	"github.com/forhsd/postgresql-parser/pkg/sql/pgwire/pgerror"
+	"github.com/forhsd/postgresql-parser/pkg/util/encoding"
+	"github.com/forhsd/postgresql-parser/pkg/util/unique"
 )
 
 // Type represents a JSON type.
@@ -1347,8 +1347,12 @@ func (j jsonObject) RemoveString(s string) (JSON, bool, error) {
 	return jsonObject(newVal), true, nil
 }
 
-func (jsonNull) RemoveString(string) (JSON, bool, error) { return nil, false, errCannotDeleteFromScalar }
-func (jsonTrue) RemoveString(string) (JSON, bool, error) { return nil, false, errCannotDeleteFromScalar }
+func (jsonNull) RemoveString(string) (JSON, bool, error) {
+	return nil, false, errCannotDeleteFromScalar
+}
+func (jsonTrue) RemoveString(string) (JSON, bool, error) {
+	return nil, false, errCannotDeleteFromScalar
+}
 func (jsonFalse) RemoveString(string) (JSON, bool, error) {
 	return nil, false, errCannotDeleteFromScalar
 }

@@ -38,7 +38,7 @@ func NewStackTrace(depth int) *StackTrace {
 }
 
 var crdbPaths = []string{
-	"github.com/auxten/postgresql-parser",
+	"github.com/forhsd/postgresql-parser",
 	"go.etcd.io/etcd/raft",
 }
 

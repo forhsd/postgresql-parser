@@ -29,11 +29,11 @@ import (
 
     "go/constant"
 
-    "github.com/auxten/postgresql-parser/pkg/sql/lex"
-    "github.com/auxten/postgresql-parser/pkg/sql/privilege"
-    "github.com/auxten/postgresql-parser/pkg/sql/roleoption"
-    "github.com/auxten/postgresql-parser/pkg/sql/sem/tree"
-    "github.com/auxten/postgresql-parser/pkg/sql/types"
+    "github.com/forhsd/postgresql-parser/pkg/sql/lex"
+    "github.com/forhsd/postgresql-parser/pkg/sql/privilege"
+    "github.com/forhsd/postgresql-parser/pkg/sql/roleoption"
+    "github.com/forhsd/postgresql-parser/pkg/sql/sem/tree"
+    "github.com/forhsd/postgresql-parser/pkg/sql/types"
 )
 
 // MaxUint is the maximum value of an uint.

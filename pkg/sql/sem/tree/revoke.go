@@ -19,7 +19,7 @@
 
 package tree
 
-import "github.com/auxten/postgresql-parser/pkg/sql/privilege"
+import "github.com/forhsd/postgresql-parser/pkg/sql/privilege"
 
 // Revoke represents a REVOKE statement.
 // PrivilegeList and TargetList are defined in grant.go

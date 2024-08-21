@@ -14,10 +14,10 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/auxten/postgresql-parser/pkg/sql/types"
-	"github.com/auxten/postgresql-parser/pkg/util/timeofday"
-	"github.com/auxten/postgresql-parser/pkg/util/timeutil"
-	"github.com/auxten/postgresql-parser/pkg/util/timeutil/pgdate"
+	"github.com/forhsd/postgresql-parser/pkg/sql/types"
+	"github.com/forhsd/postgresql-parser/pkg/util/timeofday"
+	"github.com/forhsd/postgresql-parser/pkg/util/timeutil"
+	"github.com/forhsd/postgresql-parser/pkg/util/timeutil/pgdate"
 )
 
 // presetTypesForTesting is a mapping of qualified names to types that can be mocked out

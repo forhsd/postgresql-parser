@@ -17,11 +17,11 @@ import (
 
 	"github.com/cockroachdb/errors"
 
-	//"github.com/auxten/postgresql-parser/pkg/server/telemetry"
-	"github.com/auxten/postgresql-parser/pkg/sql/lex"
-	"github.com/auxten/postgresql-parser/pkg/sql/pgwire/pgcode"
-	"github.com/auxten/postgresql-parser/pkg/sql/pgwire/pgerror"
-	"github.com/auxten/postgresql-parser/pkg/sql/types"
+	//"github.com/forhsd/postgresql-parser/pkg/server/telemetry"
+	"github.com/forhsd/postgresql-parser/pkg/sql/lex"
+	"github.com/forhsd/postgresql-parser/pkg/sql/pgwire/pgcode"
+	"github.com/forhsd/postgresql-parser/pkg/sql/pgwire/pgerror"
+	"github.com/forhsd/postgresql-parser/pkg/sql/types"
 )
 
 // Expr represents an expression.
@@ -283,8 +283,10 @@ func (node *ParenExpr) TypedInnerExpr() TypedExpr {
 
 // StripParens strips any parentheses surrounding an expression and
 // returns the inner expression. For instance:
-//   1   -> 1
-//  (1)  -> 1
+//
+//	 1   -> 1
+//	(1)  -> 1
+//
 // ((1)) -> 1
 func StripParens(expr Expr) Expr {
 	if p, ok := expr.(*ParenExpr); ok {
@@ -1511,7 +1513,7 @@ func NewTypedCastExpr(expr TypedExpr, typ *types.T) (*CastExpr, error) {
 }
 
 type castInfo struct {
-	fromT   *types.T
+	fromT *types.T
 	//counter telemetry.Counter
 }
 

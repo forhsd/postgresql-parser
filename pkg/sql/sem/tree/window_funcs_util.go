@@ -10,7 +10,7 @@
 
 package tree
 
-import "github.com/auxten/postgresql-parser/pkg/util/ring"
+import "github.com/forhsd/postgresql-parser/pkg/util/ring"
 
 // PeerGroupChecker can check if a pair of row indices within a partition are
 // in the same peer group. It also returns an error if it occurs while checking

@@ -15,19 +15,19 @@ import (
 	"strings"
 	"time"
 
-	//"github.com/auxten/postgresql-parser/pkg/server/telemetry"
-	"github.com/auxten/postgresql-parser/pkg/sql/lex"
-	"github.com/auxten/postgresql-parser/pkg/sql/pgwire/pgcode"
-	"github.com/auxten/postgresql-parser/pkg/sql/pgwire/pgerror"
-	"github.com/auxten/postgresql-parser/pkg/sql/sessiondata"
+	//"github.com/forhsd/postgresql-parser/pkg/server/telemetry"
 	"github.com/cockroachdb/errors"
+	"github.com/forhsd/postgresql-parser/pkg/sql/lex"
+	"github.com/forhsd/postgresql-parser/pkg/sql/pgwire/pgcode"
+	"github.com/forhsd/postgresql-parser/pkg/sql/pgwire/pgerror"
+	"github.com/forhsd/postgresql-parser/pkg/sql/sessiondata"
 	"golang.org/x/text/language"
 
-	//"github.com/auxten/postgresql-parser/pkg/sql/sqltelemetry"
-	"github.com/auxten/postgresql-parser/pkg/sql/types"
-	"github.com/auxten/postgresql-parser/pkg/util/errorutil/unimplemented"
-	"github.com/auxten/postgresql-parser/pkg/util/hlc"
-	"github.com/auxten/postgresql-parser/pkg/util/timeutil"
+	//"github.com/forhsd/postgresql-parser/pkg/sql/sqltelemetry"
+	"github.com/forhsd/postgresql-parser/pkg/sql/types"
+	"github.com/forhsd/postgresql-parser/pkg/util/errorutil/unimplemented"
+	"github.com/forhsd/postgresql-parser/pkg/util/hlc"
+	"github.com/forhsd/postgresql-parser/pkg/util/timeutil"
 )
 
 // SemaContext defines the context in which to perform semantic analysis on an
@@ -2302,17 +2302,17 @@ func (*placeholderAnnotationVisitor) VisitPost(expr Expr) Expr { return expr }
 // provided Statement, annotating all placeholders with a type in either of the following
 // situations:
 //
-//  - the placeholder is the subject of an explicit type annotation in at least one
-//    of its occurrences. If it is subject to multiple explicit type annotations
-//    where the types are not all in agreement, or if the placeholder already has
-//    a type hint in the placeholder map which conflicts with the explicit type
-//    annotation type, an error will be thrown.
+//   - the placeholder is the subject of an explicit type annotation in at least one
+//     of its occurrences. If it is subject to multiple explicit type annotations
+//     where the types are not all in agreement, or if the placeholder already has
+//     a type hint in the placeholder map which conflicts with the explicit type
+//     annotation type, an error will be thrown.
 //
-//  - the placeholder is the subject to a cast of the same type in all
-//    occurrences of the placeholder. If the placeholder is subject to casts of
-//    multiple types, or if it has occurrences without a cast, no error will be
-//    thrown but the type will not be inferred. If the placeholder already has a
-//    type hint, that type will be kept regardless of any casts.
+//   - the placeholder is the subject to a cast of the same type in all
+//     occurrences of the placeholder. If the placeholder is subject to casts of
+//     multiple types, or if it has occurrences without a cast, no error will be
+//     thrown but the type will not be inferred. If the placeholder already has a
+//     type hint, that type will be kept regardless of any casts.
 //
 // See docs/RFCS/20160203_typing.md for more details on placeholder typing (in
 // particular section "First pass: placeholder annotations").

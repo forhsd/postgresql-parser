@@ -15,7 +15,7 @@ import (
 
 	"github.com/cockroachdb/errors"
 
-	"github.com/auxten/postgresql-parser/pkg/sql/pgwire/pgcode"
+	"github.com/forhsd/postgresql-parser/pkg/sql/pgwire/pgcode"
 )
 
 // WithCandidateCode decorates the error with a candidate postgres
@@ -54,22 +54,25 @@ func HasCandidateCode(err error) bool {
 // - at each level:
 //
 //   - if there is a candidate code at that level, that is used;
+//
 //   - otherwise, it calls computeDefaultCode().
 //     if the function returns an empty string,
 //     UncategorizedError is used.
 //     An example implementation for computeDefaultCode is provided below.
 //
-// - after that, it combines the code computed already for the cause
-//   (inner) and the new code just computed at the current level (outer)
-//   as follows:
+//   - after that, it combines the code computed already for the cause
+//     (inner) and the new code just computed at the current level (outer)
+//     as follows:
 //
 //   - if the outer code is uncategorized, the inner code is kept no
 //     matter what.
+//
 //   - if the outer code has the special XX prefix, that is kept.
 //     (The "XX" prefix signals importance in the pg code hierarchy.)
-//   - if the inner code is not uncategorized, it is retained.
-//   - otherwise the outer code is retained.
 //
+//   - if the inner code is not uncategorized, it is retained.
+//
+//   - otherwise the outer code is retained.
 func GetPGCodeInternal(err error, computeDefaultCode func(err error) (code string)) (code string) {
 	code = pgcode.Uncategorized
 	if c, ok := err.(*withCandidateCode); ok {

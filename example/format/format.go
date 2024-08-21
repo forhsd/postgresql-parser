@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/auxten/postgresql-parser/pkg/sql/parser"
-	"github.com/auxten/postgresql-parser/pkg/sql/sem/tree"
+	"github.com/forhsd/postgresql-parser/pkg/sql/parser"
+	"github.com/forhsd/postgresql-parser/pkg/sql/sem/tree"
 )
 
 func main() {
@@ -64,7 +64,7 @@ func main() {
 		"AND (t11.st_dt <= to_date('20201230', 'YYYYMMDD'))) AND (t11.end_dt > to_date('20201230', 'YYYYMMDD'))) " +
 		"AND (t11.int_type_cd = '7');"
 
-	if stmts, err := parser.Parse(sql); err != nil{
+	if stmts, err := parser.Parse(sql); err != nil {
 		log.Fatal(err)
 	} else {
 		for _, stmt := range stmts {

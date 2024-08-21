@@ -13,8 +13,8 @@ package tree
 import (
 	"fmt"
 
-	"github.com/auxten/postgresql-parser/pkg/sql/pgwire/pgcode"
-	"github.com/auxten/postgresql-parser/pkg/sql/pgwire/pgerror"
+	"github.com/forhsd/postgresql-parser/pkg/sql/pgwire/pgcode"
+	"github.com/forhsd/postgresql-parser/pkg/sql/pgwire/pgerror"
 )
 
 // IsolationLevel holds the isolation level for a transaction.

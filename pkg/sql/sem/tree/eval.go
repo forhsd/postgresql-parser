@@ -22,29 +22,31 @@ import (
 	"unicode/utf8"
 
 	"github.com/cockroachdb/apd"
-	//"github.com/auxten/postgresql-parser/pkg/base"
-	//"github.com/auxten/postgresql-parser/pkg/kv"
-	//"github.com/auxten/postgresql-parser/pkg/roachpb"
-	//"github.com/auxten/postgresql-parser/pkg/server/telemetry"
-	//"github.com/auxten/postgresql-parser/pkg/settings/cluster"
-	"github.com/auxten/postgresql-parser/pkg/sql/lex"
-	"github.com/auxten/postgresql-parser/pkg/sql/pgwire/pgcode"
-	"github.com/auxten/postgresql-parser/pkg/sql/pgwire/pgerror"
-	"github.com/auxten/postgresql-parser/pkg/sql/sessiondata"
-	//"github.com/auxten/postgresql-parser/pkg/sql/sqltelemetry"
-	"github.com/auxten/postgresql-parser/pkg/sql/types"
-	"github.com/auxten/postgresql-parser/pkg/util"
-	"github.com/auxten/postgresql-parser/pkg/util/arith"
-	"github.com/auxten/postgresql-parser/pkg/util/bitarray"
-	"github.com/auxten/postgresql-parser/pkg/util/duration"
-	"github.com/auxten/postgresql-parser/pkg/util/hlc"
-	"github.com/auxten/postgresql-parser/pkg/util/json"
-	//"github.com/auxten/postgresql-parser/pkg/util/mon"
-	"github.com/auxten/postgresql-parser/pkg/util/timeofday"
-	"github.com/auxten/postgresql-parser/pkg/util/timeutil"
-	"github.com/auxten/postgresql-parser/pkg/util/timeutil/pgdate"
-	"github.com/auxten/postgresql-parser/pkg/util/uuid"
+	//"github.com/forhsd/postgresql-parser/pkg/base"
+	//"github.com/forhsd/postgresql-parser/pkg/kv"
+	//"github.com/forhsd/postgresql-parser/pkg/roachpb"
+	//"github.com/forhsd/postgresql-parser/pkg/server/telemetry"
+	//"github.com/forhsd/postgresql-parser/pkg/settings/cluster"
+	"github.com/forhsd/postgresql-parser/pkg/sql/lex"
+	"github.com/forhsd/postgresql-parser/pkg/sql/pgwire/pgcode"
+	"github.com/forhsd/postgresql-parser/pkg/sql/pgwire/pgerror"
+	"github.com/forhsd/postgresql-parser/pkg/sql/sessiondata"
+
+	//"github.com/forhsd/postgresql-parser/pkg/sql/sqltelemetry"
+	"github.com/forhsd/postgresql-parser/pkg/sql/types"
+	"github.com/forhsd/postgresql-parser/pkg/util"
+	"github.com/forhsd/postgresql-parser/pkg/util/arith"
+	"github.com/forhsd/postgresql-parser/pkg/util/bitarray"
+	"github.com/forhsd/postgresql-parser/pkg/util/duration"
+	"github.com/forhsd/postgresql-parser/pkg/util/hlc"
+	"github.com/forhsd/postgresql-parser/pkg/util/json"
+
+	//"github.com/forhsd/postgresql-parser/pkg/util/mon"
 	"github.com/cockroachdb/errors"
+	"github.com/forhsd/postgresql-parser/pkg/util/timeofday"
+	"github.com/forhsd/postgresql-parser/pkg/util/timeutil"
+	"github.com/forhsd/postgresql-parser/pkg/util/timeutil/pgdate"
+	"github.com/forhsd/postgresql-parser/pkg/util/uuid"
 	"github.com/lib/pq/oid"
 )
 
@@ -2428,15 +2430,19 @@ func makeEvalTupleIn(typ *types.T) *CmpOp {
 // It returns the result of the ANY/SOME/ALL predicate.
 //
 // A NULL result is returned if there exists a NULL element and:
-//   ANY/SOME: no comparisons evaluate to true
-//   ALL: no comparisons evaluate to false
+//
+//	ANY/SOME: no comparisons evaluate to true
+//	ALL: no comparisons evaluate to false
 //
 // For example, given 1 < ANY (SELECT * FROM generate_series(1,3))
 // (right is a DTuple), evalTupleCmp would be called with:
-//   evalDatumsCmp(ctx, LT, Any, CmpOp(LT, leftType, rightParamType), leftDatum, rightTuple.D).
+//
+//	evalDatumsCmp(ctx, LT, Any, CmpOp(LT, leftType, rightParamType), leftDatum, rightTuple.D).
+//
 // Similarly, given 1 < ANY (ARRAY[1, 2, 3]) (right is a DArray),
 // evalArrayCmp would be called with:
-//   evalDatumsCmp(ctx, LT, Any, CmpOp(LT, leftType, rightParamType), leftDatum, rightArray.Array).
+//
+//	evalDatumsCmp(ctx, LT, Any, CmpOp(LT, leftType, rightParamType), leftDatum, rightArray.Array).
 func evalDatumsCmp(
 	ctx *EvalContext, op, subOp ComparisonOperator, fn *CmpOp, left Datum, right Datums,
 ) (Datum, error) {
@@ -2861,7 +2867,7 @@ type EvalContext struct {
 	//DB *kv.DB
 	//
 	//ReCache *RegexpCache
-	tmpDec  apd.Decimal
+	tmpDec apd.Decimal
 
 	// TODO(mjibson): remove prepareOnly in favor of a 2-step prepare-exec solution
 	// that is also able to save the plan to skip work during the exec step.
@@ -2954,7 +2960,7 @@ func (ctx *EvalContext) PopIVarContainer() {
 // Stop closes out the EvalContext and must be called once it is no longer in use.
 func (ctx *EvalContext) Stop(c context.Context) {
 	//ctx.Mon.Stop(c)
-	return
+
 }
 
 // GetStmtTimestamp retrieves the current statement timestamp as per
@@ -2967,6 +2973,7 @@ func (ctx *EvalContext) GetStmtTimestamp() time.Time {
 	}
 	return ctx.StmtTimestamp
 }
+
 //
 //// GetClusterTimestamp retrieves the current cluster timestamp as per
 //// the evaluation context. The timestamp is guaranteed to be nonzero.
@@ -3228,51 +3235,52 @@ var regTypeInfos = map[oid.Oid]regTypeInfo{
 	oid.T_regnamespace: {"pg_namespace", "nspname", "namespace", pgcode.UndefinedObject},
 }
 
-//// queryOidWithJoin looks up the name or OID of an input OID or string in the
-//// pg_catalog table that the input oid.Oid belongs to. If the input Datum
-//// is a DOid, the relevant table will be queried by OID; if the input is a
-//// DString, the table will be queried by its name column.
-////
-//// The return value is a fresh DOid of the input oid.Oid with name and OID
-//// set to the result of the query. If there was not exactly one result to the
-//// query, an error will be returned.
-//func queryOidWithJoin(
-//	ctx *EvalContext, typ *types.T, d Datum, joinClause string, additionalWhere string,
-//) (*DOid, error) {
-//	ret := &DOid{semanticType: typ}
-//	info := regTypeInfos[typ.Oid()]
-//	var queryCol string
-//	switch d.(type) {
-//	case *DOid:
-//		queryCol = "oid"
-//	case *DString:
-//		queryCol = info.nameCol
-//	default:
-//		return nil, errors.AssertionFailedf("invalid argument to OID cast: %s", d)
-//	}
-//	results, err := ctx.InternalExecutor.QueryRow(
-//		ctx.Ctx(), "queryOidWithJoin",
-//		ctx.Txn,
-//		fmt.Sprintf(
-//			"SELECT %s.oid, %s FROM pg_catalog.%s %s WHERE %s = $1 %s",
-//			info.tableName, info.nameCol, info.tableName, joinClause, queryCol, additionalWhere),
-//		d)
-//	if err != nil {
-//		if _, ok := errors.UnwrapAll(err).(*MultipleResultsError); ok {
-//			return nil, pgerror.Newf(pgcode.AmbiguousAlias,
-//				"more than one %s named %s", info.objName, d)
-//		}
-//		return nil, err
-//	}
-//	if results.Len() == 0 {
-//		return nil, pgerror.Newf(info.errType, "%s %s does not exist", info.objName, d)
-//	}
-//	ret.DInt = results[0].(*DOid).DInt
-//	ret.name = AsStringWithFlags(results[1], FmtBareStrings)
-//	return ret, nil
-//}
+// // queryOidWithJoin looks up the name or OID of an input OID or string in the
+// // pg_catalog table that the input oid.Oid belongs to. If the input Datum
+// // is a DOid, the relevant table will be queried by OID; if the input is a
+// // DString, the table will be queried by its name column.
+// //
+// // The return value is a fresh DOid of the input oid.Oid with name and OID
+// // set to the result of the query. If there was not exactly one result to the
+// // query, an error will be returned.
+// func queryOidWithJoin(
 //
-func queryOid(ctx *EvalContext, typ *types.T, d Datum) (*DOid, error) {
+//	ctx *EvalContext, typ *types.T, d Datum, joinClause string, additionalWhere string,
+//
+//	) (*DOid, error) {
+//		ret := &DOid{semanticType: typ}
+//		info := regTypeInfos[typ.Oid()]
+//		var queryCol string
+//		switch d.(type) {
+//		case *DOid:
+//			queryCol = "oid"
+//		case *DString:
+//			queryCol = info.nameCol
+//		default:
+//			return nil, errors.AssertionFailedf("invalid argument to OID cast: %s", d)
+//		}
+//		results, err := ctx.InternalExecutor.QueryRow(
+//			ctx.Ctx(), "queryOidWithJoin",
+//			ctx.Txn,
+//			fmt.Sprintf(
+//				"SELECT %s.oid, %s FROM pg_catalog.%s %s WHERE %s = $1 %s",
+//				info.tableName, info.nameCol, info.tableName, joinClause, queryCol, additionalWhere),
+//			d)
+//		if err != nil {
+//			if _, ok := errors.UnwrapAll(err).(*MultipleResultsError); ok {
+//				return nil, pgerror.Newf(pgcode.AmbiguousAlias,
+//					"more than one %s named %s", info.objName, d)
+//			}
+//			return nil, err
+//		}
+//		if results.Len() == 0 {
+//			return nil, pgerror.Newf(info.errType, "%s %s does not exist", info.objName, d)
+//		}
+//		ret.DInt = results[0].(*DOid).DInt
+//		ret.name = AsStringWithFlags(results[1], FmtBareStrings)
+//		return ret, nil
+//	}
+func queryOid(_ *EvalContext, _ *types.T, _ Datum) (*DOid, error) {
 	//return queryOidWithJoin(ctx, typ, d, "", "")
 	return nil, errors.New("not implemented")
 }
@@ -4765,15 +4773,18 @@ type likeKey struct {
 // For example, suppose we have escape token `\` (e.g. `B` is escaped in
 // `A\BC` and `\` is escaped in `A\\C`).
 // We need to convert
-//    `\` --> ``
-//    `\\` --> `\`
+//
+//	`\` --> ``
+//	`\\` --> `\`
+//
 // We cannot simply use strings.Replace for each conversion since the first
-// conversion will incorrectly replace our escaped escape token `\\` with ``.
+// conversion will incorrectly replace our escaped escape token `\\` with “.
 // Another example is if our escape token is `\\` (e.g. after
 // regexp.QuoteMeta).
 // We need to convert
-//    `\\` --> ``
-//    `\\\\` --> `\\`
+//
+//	`\\` --> ``
+//	`\\\\` --> `\\`
 func unescapePattern(
 	pattern, escapeToken string, emitEscapeCharacterLastError bool,
 ) (string, error) {
@@ -4817,11 +4828,14 @@ func unescapePattern(
 // replaceUnescaped replaces all instances of oldStr that are not escaped (read:
 // preceded) with the specified unescape token with newStr.
 // For example, with an escape token of `\\`
-//    replaceUnescaped("TE\\__ST", "_", ".", `\\`) --> "TE\\_.ST"
-//    replaceUnescaped("TE\\%%ST", "%", ".*", `\\`) --> "TE\\%.*ST"
+//
+//	replaceUnescaped("TE\\__ST", "_", ".", `\\`) --> "TE\\_.ST"
+//	replaceUnescaped("TE\\%%ST", "%", ".*", `\\`) --> "TE\\%.*ST"
+//
 // If the preceding escape token is escaped, then oldStr will be replaced.
 // For example
-//    replaceUnescaped("TE\\\\_ST", "_", ".", `\\`) --> "TE\\\\.ST"
+//
+//	replaceUnescaped("TE\\\\_ST", "_", ".", `\\`) --> "TE\\\\.ST"
 func replaceUnescaped(s, oldStr, newStr string, escapeToken string) string {
 	// We count the number of occurrences of 'oldStr'.
 	// This however can be an overestimate since the oldStr token could be
@@ -4895,20 +4909,23 @@ OldLoop:
 
 // Replaces all custom escape characters in s with `\\` only when they are unescaped.          (1)
 // E.g. original pattern       after QuoteMeta       after replaceCustomEscape with '@' as escape
-//        '@w@w'          ->      '@w@w'        ->        '\\w\\w'
-//        '@\@\'          ->      '@\\@\\'      ->        '\\\\\\\\'
+//
+//	'@w@w'          ->      '@w@w'        ->        '\\w\\w'
+//	'@\@\'          ->      '@\\@\\'      ->        '\\\\\\\\'
 //
 // When an escape character is escaped, we replace it with its single occurrence.              (2)
 // E.g. original pattern       after QuoteMeta       after replaceCustomEscape with '@' as escape
-//        '@@w@w'         ->      '@@w@w'       ->        '@w\\w'
-//        '@@@\'          ->      '@@@\\'       ->        '@\\\\'
+//
+//	'@@w@w'         ->      '@@w@w'       ->        '@w\\w'
+//	'@@@\'          ->      '@@@\\'       ->        '@\\\\'
 //
 // At the same time, we do not want to confuse original backslashes (which
 // after QuoteMeta are '\\') with backslashes that replace our custom escape characters,
 // so we escape these original backslashes again by converting '\\' into '\\\\'.               (3)
 // E.g. original pattern       after QuoteMeta       after replaceCustomEscape with '@' as escape
-//        '@\'            ->      '@\\'         ->        '\\\\\\'
-//        '@\@@@\'        ->      '@\\@@@\\'    ->        '\\\\\\@\\\\\\'
+//
+//	'@\'            ->      '@\\'         ->        '\\\\\\'
+//	'@\@@@\'        ->      '@\\@@@\\'    ->        '\\\\\\@\\\\\\'
 //
 // Explanation of the last example:
 // 1. we replace '@' with '\\' since it's unescaped;
@@ -5310,7 +5327,9 @@ func similarEscapeCustomChar(pattern string, escapeChar rune, isEscapeNonEmpty b
 }
 
 // caseInsensitive surrounds the transformed input string with
-//   (?i: ... )
+//
+//	(?i: ... )
+//
 // which uses a non-capturing set of parens to turn a case sensitive
 // regular expression pattern into a case insensitive regular
 // expression pattern.
@@ -5319,7 +5338,9 @@ func caseInsensitive(pattern string) string {
 }
 
 // anchorPattern surrounds the transformed input string with
-//   ^(?s: ... )$
+//
+//	^(?s: ... )$
+//
 // which requires some explanation.  We need "^" and "$" to force
 // the pattern to match the entire input string as per SQL99 spec.
 // The "(?:" and ")" are a non-capturing set of parens; we have to have

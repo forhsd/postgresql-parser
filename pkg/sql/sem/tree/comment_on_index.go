@@ -10,7 +10,7 @@
 
 package tree
 
-import "github.com/auxten/postgresql-parser/pkg/sql/lex"
+import "github.com/forhsd/postgresql-parser/pkg/sql/lex"
 
 // CommentOnIndex represents a COMMENT ON INDEX statement.
 type CommentOnIndex struct {

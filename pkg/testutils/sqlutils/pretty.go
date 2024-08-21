@@ -13,8 +13,8 @@ package sqlutils
 import (
 	"testing"
 
-	"github.com/auxten/postgresql-parser/pkg/sql/parser"
-	"github.com/auxten/postgresql-parser/pkg/sql/sem/tree"
+	"github.com/forhsd/postgresql-parser/pkg/sql/parser"
+	"github.com/forhsd/postgresql-parser/pkg/sql/sem/tree"
 )
 
 // VerifyStatementPrettyRoundtrip verifies that the SQL statements in s

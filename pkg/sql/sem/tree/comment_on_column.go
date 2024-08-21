@@ -10,7 +10,7 @@
 
 package tree
 
-import "github.com/auxten/postgresql-parser/pkg/sql/lex"
+import "github.com/forhsd/postgresql-parser/pkg/sql/lex"
 
 // CommentOnColumn represents an COMMENT ON COLUMN statement.
 type CommentOnColumn struct {

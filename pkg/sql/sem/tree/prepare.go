@@ -11,8 +11,8 @@
 package tree
 
 import (
-	"github.com/auxten/postgresql-parser/pkg/sql/lex"
-	"github.com/auxten/postgresql-parser/pkg/sql/types"
+	"github.com/forhsd/postgresql-parser/pkg/sql/lex"
+	"github.com/forhsd/postgresql-parser/pkg/sql/types"
 )
 
 // Prepare represents a PREPARE statement.

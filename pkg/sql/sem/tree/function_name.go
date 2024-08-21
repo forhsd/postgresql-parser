@@ -15,7 +15,7 @@ import (
 
 	"github.com/cockroachdb/errors"
 
-	"github.com/auxten/postgresql-parser/pkg/sql/sessiondata"
+	"github.com/forhsd/postgresql-parser/pkg/sql/sessiondata"
 )
 
 // Function names are used in expressions in the FuncExpr node.

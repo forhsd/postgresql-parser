@@ -16,10 +16,10 @@ import (
 	"math"
 
 	"github.com/cockroachdb/errors"
-	//"github.com/auxten/postgresql-parser/pkg/server/telemetry"
-	"github.com/auxten/postgresql-parser/pkg/sql/pgwire/pgcode"
-	"github.com/auxten/postgresql-parser/pkg/sql/pgwire/pgerror"
-	"github.com/auxten/postgresql-parser/pkg/sql/types"
+	//"github.com/forhsd/postgresql-parser/pkg/server/telemetry"
+	"github.com/forhsd/postgresql-parser/pkg/sql/pgwire/pgcode"
+	"github.com/forhsd/postgresql-parser/pkg/sql/pgwire/pgerror"
+	"github.com/forhsd/postgresql-parser/pkg/sql/types"
 )
 
 // SpecializedVectorizedBuiltin is used to map overloads
@@ -339,6 +339,7 @@ func (v VariadicType) Types() []*types.T {
 	for i := range v.FixedTypes {
 		result[i] = v.FixedTypes[i]
 	}
+
 	result[len(result)-1] = v.VarType
 	return result
 }
@@ -427,9 +428,11 @@ type typeCheckOverloadState struct {
 // expression parameters, along with an optional desired return type. It returns the expression
 // parameters after being type checked, along with a slice of candidate overloadImpls. The
 // slice may have length:
-//   0: overload resolution failed because no compatible overloads were found
-//   1: overload resolution succeeded
-//  2+: overload resolution failed because of ambiguity
+//
+//	 0: overload resolution failed because no compatible overloads were found
+//	 1: overload resolution succeeded
+//	2+: overload resolution failed because of ambiguity
+//
 // The inBinOp parameter denotes whether this type check is occurring within a binary operator,
 // in which case we may need to make a guess that the two parameters are of the same type if one
 // of them is NULL.

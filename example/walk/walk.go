@@ -1,10 +1,11 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
-	"github.com/auxten/postgresql-parser/pkg/sql/parser"
-	"github.com/auxten/postgresql-parser/pkg/walk"
+	"github.com/forhsd/postgresql-parser/pkg/sql/parser"
+	"github.com/forhsd/postgresql-parser/pkg/walk"
 )
 
 func main() {
@@ -26,5 +27,7 @@ func main() {
 	}
 
 	_, _ = w.Walk(stmts, nil)
-	return
+
+	fmt.Printf("stmts[0].SQL: %v\n", stmts[0].AST.String())
+
 }

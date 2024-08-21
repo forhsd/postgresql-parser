@@ -13,9 +13,9 @@ package tree
 import (
 	"github.com/cockroachdb/errors"
 
-	"github.com/auxten/postgresql-parser/pkg/sql/pgwire/pgcode"
-	"github.com/auxten/postgresql-parser/pkg/sql/pgwire/pgerror"
-	"github.com/auxten/postgresql-parser/pkg/sql/types"
+	"github.com/forhsd/postgresql-parser/pkg/sql/pgwire/pgcode"
+	"github.com/forhsd/postgresql-parser/pkg/sql/pgwire/pgerror"
+	"github.com/forhsd/postgresql-parser/pkg/sql/types"
 )
 
 // IndexedVarContainer provides the implementation of TypeCheck, Eval, and
@@ -165,7 +165,8 @@ func (h *IndexedVarHelper) checkIndex(idx int) {
 		//panic(errors.AssertionFailedf(
 		//	"invalid var index %d (columns: %d)", log.Safe(idx), log.Safe(len(h.vars))))
 		panic(errors.AssertionFailedf(
-			"invalid var index %d (columns: %d)", idx, len(h.vars)))	}
+			"invalid var index %d (columns: %d)", idx, len(h.vars)))
+	}
 }
 
 // NumVars returns the number of variables the IndexedVarHelper was initialized

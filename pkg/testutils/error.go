@@ -13,7 +13,7 @@ package testutils
 import (
 	"regexp"
 
-	"github.com/auxten/postgresql-parser/pkg/sql/pgwire/pgerror"
+	"github.com/forhsd/postgresql-parser/pkg/sql/pgwire/pgerror"
 )
 
 // IsError returns true if the error string matches the supplied regex.
@@ -32,4 +32,3 @@ func IsError(err error, re string) bool {
 	}
 	return matched
 }
-

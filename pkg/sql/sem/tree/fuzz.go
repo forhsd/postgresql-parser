@@ -8,11 +8,12 @@
 // by the Apache License, Version 2.0, included in the file
 // licenses/APL.txt.
 
+//go:build gofuzz
 // +build gofuzz
 
 package tree
 
-import "github.com/auxten/postgresql-parser/pkg/util/timeutil"
+import "github.com/forhsd/postgresql-parser/pkg/util/timeutil"
 
 var (
 	timeCtx = NewParseTimeContext(timeutil.Now())

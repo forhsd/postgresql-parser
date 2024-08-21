@@ -18,10 +18,10 @@ import (
 
 	"github.com/cockroachdb/errors"
 
-	"github.com/auxten/postgresql-parser/pkg/sql/pgwire/pgcode"
-	"github.com/auxten/postgresql-parser/pkg/sql/pgwire/pgerror"
-	"github.com/auxten/postgresql-parser/pkg/sql/types"
-	"github.com/auxten/postgresql-parser/pkg/util/duration"
+	"github.com/forhsd/postgresql-parser/pkg/sql/pgwire/pgcode"
+	"github.com/forhsd/postgresql-parser/pkg/sql/pgwire/pgerror"
+	"github.com/forhsd/postgresql-parser/pkg/sql/types"
+	"github.com/forhsd/postgresql-parser/pkg/util/duration"
 )
 
 type intervalLexer struct {
@@ -184,8 +184,8 @@ func newInvalidSQLDurationError(s string) error {
 
 // Parses a SQL standard interval string.
 // See the following links for examples:
-//  - http://www.postgresql.org/docs/9.1/static/datatype-datetime.html#DATATYPE-INTERVAL-INPUT-EXAMPLES
-//  - http://www.ibm.com/support/knowledgecenter/SSGU8G_12.1.0/com.ibm.esqlc.doc/ids_esqlc_0190.htm
+//   - http://www.postgresql.org/docs/9.1/static/datatype-datetime.html#DATATYPE-INTERVAL-INPUT-EXAMPLES
+//   - http://www.ibm.com/support/knowledgecenter/SSGU8G_12.1.0/com.ibm.esqlc.doc/ids_esqlc_0190.htm
 func sqlStdToDuration(s string, itm types.IntervalTypeMetadata) (duration.Duration, error) {
 	var d duration.Duration
 	parts := strings.Fields(s)
@@ -410,9 +410,9 @@ func sqlStdToDuration(s string, itm types.IntervalTypeMetadata) (duration.Durati
 
 // Parses an ISO8601 (with designators) string.
 // See the following links for examples:
-//  - http://www.postgresql.org/docs/9.1/static/datatype-datetime.html#DATATYPE-INTERVAL-INPUT-EXAMPLES
-//  - https://en.wikipedia.org/wiki/ISO_8601#Time_intervals
-//  - https://en.wikipedia.org/wiki/ISO_8601#Durations
+//   - http://www.postgresql.org/docs/9.1/static/datatype-datetime.html#DATATYPE-INTERVAL-INPUT-EXAMPLES
+//   - https://en.wikipedia.org/wiki/ISO_8601#Time_intervals
+//   - https://en.wikipedia.org/wiki/ISO_8601#Durations
 func iso8601ToDuration(s string) (duration.Duration, error) {
 	var d duration.Duration
 	if len(s) == 0 || s[0] != 'P' {

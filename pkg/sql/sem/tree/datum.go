@@ -25,22 +25,22 @@ import (
 	"unsafe"
 
 	"github.com/cockroachdb/apd"
-	"github.com/auxten/postgresql-parser/pkg/sql/lex"
-	"github.com/auxten/postgresql-parser/pkg/sql/pgwire/pgcode"
-	"github.com/auxten/postgresql-parser/pkg/sql/pgwire/pgerror"
-	"github.com/auxten/postgresql-parser/pkg/sql/types"
-	"github.com/auxten/postgresql-parser/pkg/util/bitarray"
-	"github.com/auxten/postgresql-parser/pkg/util/duration"
-	"github.com/auxten/postgresql-parser/pkg/util/ipaddr"
-	"github.com/auxten/postgresql-parser/pkg/util/json"
-	"github.com/auxten/postgresql-parser/pkg/util/stringencoding"
-	"github.com/auxten/postgresql-parser/pkg/util/timeofday"
-	"github.com/auxten/postgresql-parser/pkg/util/timetz"
-	"github.com/auxten/postgresql-parser/pkg/util/timeutil"
-	"github.com/auxten/postgresql-parser/pkg/util/timeutil/pgdate"
-	"github.com/auxten/postgresql-parser/pkg/util/uint128"
-	"github.com/auxten/postgresql-parser/pkg/util/uuid"
 	"github.com/cockroachdb/errors"
+	"github.com/forhsd/postgresql-parser/pkg/sql/lex"
+	"github.com/forhsd/postgresql-parser/pkg/sql/pgwire/pgcode"
+	"github.com/forhsd/postgresql-parser/pkg/sql/pgwire/pgerror"
+	"github.com/forhsd/postgresql-parser/pkg/sql/types"
+	"github.com/forhsd/postgresql-parser/pkg/util/bitarray"
+	"github.com/forhsd/postgresql-parser/pkg/util/duration"
+	"github.com/forhsd/postgresql-parser/pkg/util/ipaddr"
+	"github.com/forhsd/postgresql-parser/pkg/util/json"
+	"github.com/forhsd/postgresql-parser/pkg/util/stringencoding"
+	"github.com/forhsd/postgresql-parser/pkg/util/timeofday"
+	"github.com/forhsd/postgresql-parser/pkg/util/timetz"
+	"github.com/forhsd/postgresql-parser/pkg/util/timeutil"
+	"github.com/forhsd/postgresql-parser/pkg/util/timeutil/pgdate"
+	"github.com/forhsd/postgresql-parser/pkg/util/uint128"
+	"github.com/forhsd/postgresql-parser/pkg/util/uuid"
 	"github.com/lib/pq/oid"
 	"golang.org/x/text/collate"
 	"golang.org/x/text/language"
@@ -1130,7 +1130,6 @@ func (d *DString) Compare(ctx *EvalContext, other Datum) int {
 func (d *DString) Prev(_ *EvalContext) (Datum, bool) {
 	return nil, false
 }
-
 
 // Key is a custom type for a byte string in proto
 // messages which refer to Cockroach keys.
@@ -2482,7 +2481,8 @@ func (d *DTimestampTZ) Size() uintptr {
 
 // stripTimeZone removes the time zone from this TimestampTZ. For example, a
 // TimestampTZ '2012-01-01 12:00:00 +02:00' would become
-//             '2012-01-01 12:00:00'.
+//
+//	'2012-01-01 12:00:00'.
 func (d *DTimestampTZ) stripTimeZone(ctx *EvalContext) *DTimestamp {
 	return d.EvalAtTimeZone(ctx, ctx.GetLocation())
 }
@@ -3206,9 +3206,10 @@ func (d *DTuple) Size() uintptr {
 
 // ContainsNull returns true if the tuple contains NULL, possibly nested inside
 // other tuples. For example, all the following tuples contain NULL:
-//  (1, 2, NULL)
-//  ((1, 1), (2, NULL))
-//  (((1, 1), (2, 2)), ((3, 3), (4, NULL)))
+//
+//	(1, 2, NULL)
+//	((1, 1), (2, NULL))
+//	(((1, 1), (2, 2)), ((3, 3), (4, NULL)))
 func (d *DTuple) ContainsNull() bool {
 	for _, r := range d.D {
 		if r == DNull {
@@ -3675,14 +3676,13 @@ func (d *DOid) Min(ctx *EvalContext) (Datum, bool) {
 //
 // Instead, DOidWrapper allows a standard Datum to be wrapped with a new Oid.
 // This approach provides two major advantages:
-// - performance of the existing Datum types are not affected because they
-//   do not need to have custom oid.Oids added to their structure.
-// - the introduction of new Datum aliases is straightforward and does not require
-//   additions to typing rules or type-dependent evaluation behavior.
+//   - performance of the existing Datum types are not affected because they
+//     do not need to have custom oid.Oids added to their structure.
+//   - the introduction of new Datum aliases is straightforward and does not require
+//     additions to typing rules or type-dependent evaluation behavior.
 //
 // Types that currently benefit from DOidWrapper are:
 // - DName => DOidWrapper(*DString, oid.T_name)
-//
 type DOidWrapper struct {
 	Wrapped Datum
 	Oid     oid.Oid

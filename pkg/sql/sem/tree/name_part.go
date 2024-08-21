@@ -10,7 +10,7 @@
 
 package tree
 
-import "github.com/auxten/postgresql-parser/pkg/sql/lex"
+import "github.com/forhsd/postgresql-parser/pkg/sql/lex"
 
 // A Name is an SQL identifier.
 //

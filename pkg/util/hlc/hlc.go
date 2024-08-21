@@ -24,7 +24,7 @@ import (
 	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"
 
-	"github.com/auxten/postgresql-parser/pkg/util/timeutil"
+	"github.com/forhsd/postgresql-parser/pkg/util/timeutil"
 )
 
 // TODO(Tobias): Figure out if it would make sense to save some

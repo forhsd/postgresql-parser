@@ -31,7 +31,7 @@ import (
 
 	"github.com/petermattis/goid"
 
-	"github.com/auxten/postgresql-parser/pkg/util/timeutil"
+	"github.com/forhsd/postgresql-parser/pkg/util/timeutil"
 )
 
 // interestingGoroutines returns all goroutines we care about for the purpose
